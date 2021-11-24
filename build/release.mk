@@ -133,23 +133,23 @@ release/publish:
 	@bash $(CURDIR)/build/upload_artifacts_gh.sh
 
 .PHONY : release-linux
-release-linux: release/pkg-linux release/fix-tarballs-linux release/sign release/publish
+release-linux: release/pkg-linux release/fix-tarballs-linux
 	@echo "=== [release-linux] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-amd64
-release-linux-amd64: release/pkg-linux-amd64 release/fix-tarballs-linux release/sign release/publish
+release-linux-amd64: release/pkg-linux-amd64 release/fix-tarballs-linux
 	@echo "=== [release-linux-amd64] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-arm
-release-linux-arm: release/pkg-linux-arm release/fix-tarballs-linux release/sign release/publish
+release-linux-arm: release/pkg-linux-arm release/fix-tarballs-linux
 	@echo "=== [release-linux-arm] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-arm64
-release-linux-arm64: release/pkg-linux-arm64 release/fix-tarballs-linux release/sign release/publish
+release-linux-arm64: release/pkg-linux-arm64 release/fix-tarballs-linux
 	@echo "=== [release-linux-arm64] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-legacy
- release-linux-legacy: release/pkg-linux-legacy release/fix-tarballs-linux release/sign release/publish
+ release-linux-legacy: release/pkg-linux-legacy release/fix-tarballs-linux
 	@echo "=== [release-linux-legacy] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-for-docker
