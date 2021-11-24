@@ -129,35 +129,41 @@ release/sign:
 
 .PHONY : release/publish
 release/publish:
+ifdef RELEASE
 	@echo "=== [release/publish] publishing artifacts"
-	@bash $(CURDIR)/build/upload_artifacts_gh.sh
+	@bash $(CURDIR)/upload.sh
+else
+	@echo "=== NOT RELEASING FILES ==="
+	@echo "=== NOT RELEASING FILES ==="
+	@echo "=== NOT RELEASING FILES ==="
+endif
 
 .PHONY : release-linux
-release-linux: release/pkg-linux release/fix-tarballs-linux release/sign release/publish
+release-linux: release/pkg-linux release/fix-tarballs-linux release/publish
 	@echo "=== [release-linux] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-amd64
-release-linux-amd64: release/pkg-linux-amd64 release/fix-tarballs-linux release/sign release/publish
+release-linux-amd64: release/pkg-linux-amd64 release/fix-tarballs-linux release/publish
 	@echo "=== [release-linux-amd64] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-arm
-release-linux-arm: release/pkg-linux-arm release/fix-tarballs-linux release/sign release/publish
+release-linux-arm: release/pkg-linux-arm release/fix-tarballs-linux release/publish
 	@echo "=== [release-linux-arm] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-arm64
-release-linux-arm64: release/pkg-linux-arm64 release/fix-tarballs-linux release/sign release/publish
+release-linux-arm64: release/pkg-linux-arm64 release/fix-tarballs-linux release/publish
 	@echo "=== [release-linux-arm64] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-legacy
- release-linux-legacy: release/pkg-linux-legacy release/fix-tarballs-linux release/sign release/publish
+ release-linux-legacy: release/pkg-linux-legacy release/fix-tarballs-linux release/publish
 	@echo "=== [release-linux-legacy] full pre-release cycle complete for nix"
 
 .PHONY : release-linux-for-docker
-release-linux-for-docker: release/pkg-linux-for-docker
+release-linux-for-docker: release/pkg-linux-for-docker release/publish
 	@echo "=== [release-linux-for-docker] compiling assets for docker"
 
 .PHONY : release-macos
-release-macos: release/pkg-macos release/fix-tarballs-macos release/publish
+release-macos: release/pkg-macos release/fix-tarballs-macos
 	@echo "=== [release-macos] full pre-release cycle complete for macOS"
 
 .PHONY : generate-goreleaser-amd64

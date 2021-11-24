@@ -9,6 +9,7 @@ RUN apt-get update \
         gpg-agent \
         debsigs \
         unzip \
+        tcpdump \
         zip
 
 RUN curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb

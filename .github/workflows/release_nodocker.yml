@@ -1,0 +1,78 @@
+name: Release Non-Docker
+
+on:
+  workflow_dispatch
+
+env:
+  TAG: '1.0.0'
+  GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+  GH_VERSION: '2.0.0'
+
+jobs:
+  package-amd64:
+    name: amd64
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.14.4'
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y rpm gnupg2 gpg-agent debsigs unzip zip
+      - name: Install GH CLI
+        run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
+      - name: make tag
+        run: git tag $TAG
+
+      - name: build amd64
+        run: make ci/prerelease/linux-amd64
+      - name: publish
+        env:
+          RELEASE: true
+          DUMP: true
+        run: make release/publish
+
+  package-arm64:
+    name: arm64
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.14.4'
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y rpm gnupg2 gpg-agent debsigs unzip zip
+      - name: Install GH CLI
+        run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
+      - name: make tag
+        run: git tag $TAG
+      - name: build arm64
+        run: make ci/prerelease/linux-arm64
+
+      - name: publish
+        env:
+          RELEASE: true
+        run: make release/publish
+
+  package-arm:
+    name: arm
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.14.4'
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y rpm gnupg2 gpg-agent debsigs unzip zip
+      - name: Install GH CLI
+        run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
+      - name: make tag
+        run: git tag $TAG
+
+      - name: build arm
+        run: make ci/prerelease/linux-arm
+
+      - name: publish
+        env:
+          RELEASE: true
+        run: make release/publish

@@ -90,6 +90,8 @@ ifdef TAG
 			-e PRERELEASE=true \
 			-e GITHUB_TOKEN \
 			-e TAG \
+			-e RELEASE \
+			-e DUMP \
 			-e GPG_MAIL \
 			-e GPG_PASSPHRASE \
 			-e GPG_PRIVATE_KEY_BASE64 \
@@ -106,7 +108,7 @@ dev/release/pkg: ci/deps
 			--name "infrastructure-agent-prerelease" \
 			-v $(CURDIR):/go/src/github.com/newrelic/infrastructure-agent \
             -w /go/src/github.com/newrelic/infrastructure-agent \
-			-e TAG=0.0.0 \
+			-e TAG=1.0.0 \
 			-e SNAPSHOT=true \
 			$(BUILDER_IMG_TAG) make release/pkg-linux
 

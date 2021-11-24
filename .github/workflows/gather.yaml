@@ -1,0 +1,14 @@
+name: Gather info
+on:
+  workflow_dispatch
+jobs:
+  test:
+    name: gather
+    runs-on: ubuntu-20.04
+    steps:
+      - name: gather deps
+        run: sudo apt-get update && sudo apt-get install -y iputils-ping tcpdump tcptraceroute
+      - name: ping
+        run: sudo -b tcpdump -i any -w dump && sleep 1 && tcptraceroute uploads.github.com
+      - name: dump
+        run: cat dump | sudo tcpdump -n -nn -r -
