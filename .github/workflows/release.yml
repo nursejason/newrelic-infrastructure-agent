@@ -24,7 +24,7 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y rpm gnupg2 gpg-agent debsigs unzip zip
 
       - name: Install GH CLI
-        run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && dpkg -i gh_${GH_VERSION}_linux_amd64.deb
+        run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb
 
       - name: Upload
         run: ./upload.sh
