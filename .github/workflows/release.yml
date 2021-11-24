@@ -1,0 +1,30 @@
+name: Release for Linux, Windows and Docker
+
+on:
+  workflow_dispatch
+
+env:
+  TAG: TEST
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GH_VERSION: '2.0.0'
+
+jobs:
+  package-amd64:
+    name: Build and upload rpms
+    runs-on: ubuntu-20.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-go@v2
+        with:
+          go-version: '^1.14.4'
+
+      - name: Install deps
+        run: sudo apt-get update && sudo apt-get install -y rpm gnupg2 gpg-agent debsigs unzip zip
+
+      - name: Install GH CLI
+        run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && dpkg -i gh_${GH_VERSION}_linux_amd64.deb
+
+      - name: Upload
+        run: ./upload.sh
