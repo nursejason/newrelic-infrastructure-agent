@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 
 env:
-  TAG: test
+  TAG: '1.0.0'
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   GH_VERSION: '2.0.0'
 
@@ -26,11 +26,11 @@ jobs:
       - name: Install GH CLI
         run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
 
-        #- name: fetch tags
-        #  run: git tag test
+      - name: make tag
+        run: git tag $TAG
 
       - name: build
-        run: TAG=test make release-linux-amd64
+        run: make release-linux-amd64
 
       - name: Upload
         run: ./upload.sh
