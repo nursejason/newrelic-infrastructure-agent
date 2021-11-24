@@ -16,9 +16,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: fetch tags
-        run: git fetch
-
       - uses: actions/setup-go@v2
         with:
           go-version: '^1.14.4'
@@ -28,6 +25,9 @@ jobs:
 
       - name: Install GH CLI
         run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
+
+      - name: fetch tags
+        run: git tag test
 
       - name: build
         run: TAG=test make release-linux-amd64
