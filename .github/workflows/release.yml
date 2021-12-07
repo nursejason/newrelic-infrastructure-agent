@@ -4,7 +4,7 @@ on:
   workflow_dispatch
 
 env:
-  TAG: '1.0.0'
+  TAG: '1.0.2'
   GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
   GH_VERSION: '2.0.0'
 
@@ -24,11 +24,12 @@ jobs:
         run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
       - name: make tag
         run: git tag $TAG
+      - name: iptables
+        run: sudo iptables -A INPUT -i eth0 -m state --state INVALID -j DROP
 
       - name: build amd64
         env:
           RELEASE: true
-          DUMP: true
         run: make ci/prerelease/linux-amd64
 
   package-arm64:
@@ -46,9 +47,10 @@ jobs:
         run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
       - name: make tag
         run: git tag $TAG
+      - name: iptables
+        run: sudo iptables -A INPUT -i eth0 -m state --state INVALID -j DROP
       - name: build arm64
         env:
-          DUMP: true
           RELEASE: true
         run: make ci/prerelease/linux-arm64
 
@@ -67,8 +69,9 @@ jobs:
         run: curl -L https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.deb -o gh_${GH_VERSION}_linux_amd64.deb && sudo dpkg -i gh_${GH_VERSION}_linux_amd64.deb && rm gh_${GH_VERSION}_linux_amd64.deb
       - name: make tag
         run: git tag $TAG
+      - name: iptables
+        run: sudo iptables -A INPUT -i eth0 -m state --state INVALID -j DROP
       - name: build arm
         env:
-          DUMP: true
           RELEASE: true
         run: make ci/prerelease/linux-arm
