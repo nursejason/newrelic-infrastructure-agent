@@ -8,7 +8,11 @@ jobs:
     steps:
       - name: gather deps
         run: sudo apt-get update && sudo apt-get install -y iputils-ping tcpdump tcptraceroute
-      - name: ping
-        run: sudo -b tcpdump -i any -w dump && sleep 1 && tcptraceroute uploads.github.com
-      - name: dump
-        run: cat dump | sudo tcpdump -n -nn -r -
+      - name: view iptables
+        run: sudo iptables -S
+      - name: view docker iptables
+        run: docker build -t infrastructure-agent-builder -f ./build/Dockerfile . && docker run -t infrastructure-agent-builder /bin/bash -- iptables -S
+        #- name: ping
+        #  run: sudo -b tcpdump -i any -w dump && sleep 1 && tcptraceroute uploads.github.com
+        #- name: dump
+        #  run: cat dump | sudo tcpdump -n -nn -r -

@@ -108,7 +108,7 @@ dev/release/pkg: ci/deps
 			--name "infrastructure-agent-prerelease" \
 			-v $(CURDIR):/go/src/github.com/newrelic/infrastructure-agent \
             -w /go/src/github.com/newrelic/infrastructure-agent \
-			-e TAG=1.0.0 \
+			-e TAG \
 			-e SNAPSHOT=true \
 			$(BUILDER_IMG_TAG) make release/pkg-linux
 
