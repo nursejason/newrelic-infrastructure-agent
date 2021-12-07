@@ -28,7 +28,6 @@ jobs:
       - name: build amd64
         env:
           RELEASE: true
-          DUMP: true
         run: make ci/prerelease/linux-amd64
 
   package-arm64:
@@ -48,7 +47,6 @@ jobs:
         run: git tag $TAG
       - name: build arm64
         env:
-          DUMP: true
           RELEASE: true
         run: make ci/prerelease/linux-arm64
 
@@ -69,6 +67,5 @@ jobs:
         run: git tag $TAG
       - name: build arm
         env:
-          DUMP: true
           RELEASE: true
         run: make ci/prerelease/linux-arm
